@@ -7,11 +7,9 @@ import {
   Archive, 
   AlertOctagon, 
   Trash2, 
-  PenSquare, 
-  Tag, 
-  HardDrive,
-  ExternalLink,
-  ShieldCheck
+  SquarePen, 
+  ShieldCheck,
+  ChevronRight
 } from 'lucide-react';
 
 export default function Sidebar({ 
@@ -33,19 +31,22 @@ export default function Sidebar({
   ];
 
   return (
-    <aside className="w-64 min-w-[240px] h-[calc(100vh-4rem)] bg-white/70 dark:bg-slate-900/60 backdrop-blur-md border-r border-slate-200/80 dark:border-slate-800 flex flex-col justify-between p-3.5 select-none transition-colors">
-      <div className="space-y-4">
-        {/* Yahoo-style Compose Button */}
+    <aside className="w-56 min-w-[210px] h-[calc(100vh-3.5rem)] bg-[#fbfbfd]/70 dark:bg-[#161618]/70 border-r border-black/[0.06] dark:border-white/[0.08] flex flex-col justify-between p-2.5 select-none transition-colors">
+      <div className="space-y-3">
+        {/* Apple + Yahoo Compose Button */}
         <button
           onClick={onOpenCompose}
-          className="w-full yahoo-gradient hover:opacity-95 text-white font-semibold py-3 px-4 rounded-2xl shadow-lg shadow-purple-600/20 flex items-center justify-center gap-2.5 transform active:scale-[0.98] hover:translate-y-[-1px] transition-all duration-200"
+          className="w-full yahoo-apple-gradient hover:brightness-105 active:scale-[0.98] text-white font-medium py-2 px-3 rounded-xl shadow-sm shadow-purple-600/25 flex items-center justify-center gap-2 transition-all duration-150 text-xs"
         >
-          <PenSquare className="w-5 h-5" />
-          <span className="tracking-wide">Redactar</span>
+          <SquarePen className="w-4 h-4" />
+          <span>Redactar</span>
         </button>
 
-        {/* Folder Navigation */}
-        <nav className="space-y-1">
+        {/* Folder Navigation - Apple Mail sidebar styling */}
+        <nav className="space-y-0.5">
+          <p className="px-2.5 text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">
+            Buzones
+          </p>
           {folders.map((item) => {
             const Icon = item.icon;
             const isActive = currentFolder === item.id;
@@ -53,15 +54,15 @@ export default function Sidebar({
               <button
                 key={item.id}
                 onClick={() => setCurrentFolder(item.id)}
-                className={`w-full flex items-center justify-between px-3.5 py-2.5 rounded-xl text-sm font-medium transition-all duration-150 group ${
+                className={`w-full flex items-center justify-between px-2.5 py-1.5 rounded-lg text-xs transition-all duration-100 ${
                   isActive
-                    ? 'bg-purple-100/80 dark:bg-purple-950/60 text-purple-900 dark:text-purple-200 font-semibold shadow-xs'
-                    : 'text-slate-600 dark:text-slate-400 hover:bg-slate-100/80 dark:hover:bg-slate-800/60 hover:text-slate-900 dark:hover:text-slate-100'
+                    ? 'bg-purple-100/80 dark:bg-purple-950/50 text-purple-900 dark:text-purple-200 font-semibold'
+                    : 'text-slate-600 dark:text-slate-400 hover:bg-black/[0.04] dark:hover:bg-white/[0.05] hover:text-slate-900 dark:hover:text-slate-200'
                 }`}
               >
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2.5">
                   <Icon
-                    className={`w-4 h-4 transition-transform group-hover:scale-110 duration-200 ${
+                    className={`w-3.5 h-3.5 ${
                       isActive 
                         ? 'text-purple-700 dark:text-purple-400' 
                         : 'text-slate-400 dark:text-slate-500'
@@ -71,10 +72,10 @@ export default function Sidebar({
                 </div>
                 {item.count > 0 && (
                   <span
-                    className={`px-2 py-0.5 rounded-full text-xs font-bold transition-all ${
+                    className={`px-1.5 py-0.2 rounded-md text-[10px] font-semibold ${
                       isActive
-                        ? 'bg-purple-600 text-white shadow-xs'
-                        : 'bg-purple-100 text-purple-700 dark:bg-slate-800 dark:text-purple-300'
+                        ? 'bg-purple-600 text-white'
+                        : 'bg-purple-100 dark:bg-purple-950/70 text-purple-700 dark:text-purple-300'
                     }`}
                   >
                     {item.count}
@@ -86,54 +87,48 @@ export default function Sidebar({
         </nav>
 
         {/* Labels / Categories preview */}
-        <div className="pt-3 border-t border-slate-200/60 dark:border-slate-800/80">
-          <p className="px-3 text-xs font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-2">
-            Vistas rápidas
+        <div className="pt-2 border-t border-black/[0.04] dark:border-white/[0.06]">
+          <p className="px-2.5 text-[10px] font-semibold text-slate-400 dark:text-slate-500 uppercase tracking-wider mb-1">
+            Etiquetas
           </p>
-          <div className="space-y-1">
-            <div className="flex items-center gap-2.5 px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-purple-600 cursor-pointer transition-colors rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
-              <span className="w-2.5 h-2.5 rounded-full bg-blue-500 ring-2 ring-blue-100 dark:ring-blue-900"></span>
+          <div className="space-y-0.5">
+            <div className="flex items-center gap-2 px-2.5 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.04] cursor-pointer">
+              <span className="w-2 h-2 rounded-full bg-blue-500"></span>
               <span>Trabajo</span>
             </div>
-            <div className="flex items-center gap-2.5 px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-purple-600 cursor-pointer transition-colors rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 ring-2 ring-emerald-100 dark:ring-emerald-900"></span>
+            <div className="flex items-center gap-2 px-2.5 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.04] cursor-pointer">
+              <span className="w-2 h-2 rounded-full bg-emerald-500"></span>
               <span>Personal</span>
             </div>
-            <div className="flex items-center gap-2.5 px-3 py-1.5 text-xs text-slate-600 dark:text-slate-400 hover:text-purple-600 cursor-pointer transition-colors rounded-lg hover:bg-slate-50 dark:hover:bg-slate-800/50">
-              <span className="w-2.5 h-2.5 rounded-full bg-amber-500 ring-2 ring-amber-100 dark:ring-amber-900"></span>
-              <span>Importante</span>
+            <div className="flex items-center gap-2 px-2.5 py-1 text-xs text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-200 rounded-lg hover:bg-black/[0.03] dark:hover:bg-white/[0.04] cursor-pointer">
+              <span className="w-2 h-2 rounded-full bg-amber-500"></span>
+              <span>Finanzas</span>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Gmail Account Card at Bottom */}
-      <div className="bg-gradient-to-br from-purple-50 to-indigo-50/50 dark:from-slate-800/70 dark:to-purple-950/20 border border-purple-100 dark:border-purple-900/40 rounded-2xl p-3.5 space-y-2.5 shadow-sm">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center gap-2 text-xs font-bold text-slate-800 dark:text-slate-200">
-            <ShieldCheck className="w-4 h-4 text-purple-600 dark:text-purple-400" />
-            <span>Cuenta vinculada</span>
+      {/* Gmail Account Card at Bottom - Minimalist Apple card */}
+      <div 
+        onClick={onOpenConnectModal}
+        className="p-2.5 bg-white/80 dark:bg-[#1e1e20] border border-black/[0.06] dark:border-white/[0.08] rounded-xl hover:border-purple-300/60 dark:hover:border-purple-700/60 transition-all cursor-pointer group"
+      >
+        <div className="flex items-center justify-between mb-1">
+          <div className="flex items-center gap-1.5 text-[11px] font-semibold text-slate-800 dark:text-slate-200">
+            <ShieldCheck className="w-3.5 h-3.5 text-purple-600 dark:text-purple-400" />
+            <span>Cuenta</span>
           </div>
-          <span className={`text-[10px] font-semibold px-1.5 py-0.5 rounded-full ${
+          <span className={`text-[9px] font-semibold px-1 py-0.2 rounded ${
             status?.connected 
-              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-300' 
-              : 'bg-amber-100 text-amber-700 dark:bg-amber-900/50 dark:text-amber-300'
+              ? 'bg-emerald-100 text-emerald-700 dark:bg-emerald-950/60 dark:text-emerald-300' 
+              : 'bg-purple-100 text-purple-700 dark:bg-purple-950/60 dark:text-purple-300'
           }`}>
-            {status?.connected ? 'Gmail Activo' : 'Modo Demo'}
+            {status?.connected ? 'Gmail' : 'Demo'}
           </span>
         </div>
-        <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-tight">
-          {status?.connected 
-            ? `Sincronizando correos con ${status.email}` 
-            : 'Conecta tu cuenta @gmail.com para recibir tus correos reales'}
+        <p className="text-[10px] text-slate-400 dark:text-slate-500 truncate">
+          {status?.connected ? status.email : 'Vincular cuenta @gmail.com'}
         </p>
-        <button
-          onClick={onOpenConnectModal}
-          className="w-full text-xs font-medium text-purple-700 dark:text-purple-300 hover:text-purple-800 dark:hover:text-purple-200 bg-white dark:bg-slate-800 border border-purple-200 dark:border-purple-700/60 py-1.5 rounded-lg flex items-center justify-center gap-1.5 shadow-2xs hover:shadow-xs transition-all"
-        >
-          <span>{status?.connected ? 'Cambiar cuenta' : 'Vincular Gmail'}</span>
-          <ExternalLink className="w-3 h-3" />
-        </button>
       </div>
     </aside>
   );

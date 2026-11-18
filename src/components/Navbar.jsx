@@ -4,12 +4,10 @@ import {
   RotateCw, 
   Moon, 
   Sun, 
-  HelpCircle, 
   Mail, 
-  Sparkles,
-  Radio,
+  X,
   SlidersHorizontal,
-  X
+  ChevronRight
 } from 'lucide-react';
 
 export default function Navbar({ 
@@ -23,76 +21,71 @@ export default function Navbar({
   onOpenConnectModal 
 }) {
   return (
-    <header className="h-16 border-b border-slate-200/80 dark:border-slate-800 bg-white/80 dark:bg-slate-900/90 backdrop-blur-md px-4 flex items-center justify-between sticky top-0 z-30 transition-colors">
-      {/* Brand logo & title */}
-      <div className="flex items-center gap-3 w-64 min-w-[220px]">
-        <div className="w-10 h-10 rounded-xl yahoo-gradient flex items-center justify-center text-white shadow-md shadow-purple-500/20 transform hover:scale-105 transition-transform duration-200 cursor-pointer">
-          <Mail className="w-5 h-5" />
+    <header className="h-14 border-b border-black/[0.06] dark:border-white/[0.08] bg-[#fbfbfd]/80 dark:bg-[#161618]/80 backdrop-blur-xl px-4 flex items-center justify-between sticky top-0 z-30 transition-colors select-none">
+      {/* Brand logo & title - Apple clean layout + Yahoo identity */}
+      <div className="flex items-center gap-2.5 w-60 min-w-[200px]">
+        <div className="w-8 h-8 rounded-xl yahoo-apple-gradient flex items-center justify-center text-white shadow-sm shadow-purple-600/30">
+          <Mail className="w-4 h-4 stroke-[2]" />
         </div>
-        <div>
-          <div className="flex items-center gap-1.5">
-            <span className="font-extrabold text-lg tracking-tight bg-gradient-to-r from-purple-700 via-indigo-600 to-purple-800 dark:from-purple-400 dark:to-indigo-300 bg-clip-text text-transparent">
-              Uroci Mail
-            </span>
-            <span className="text-[10px] uppercase font-bold tracking-wider px-1.5 py-0.5 rounded-full bg-purple-100 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300">
-              Yahoo! Style
-            </span>
-          </div>
-          <p className="text-[11px] text-slate-400 dark:text-slate-500 leading-none">
-            Simple & Elegante
-          </p>
+        <div className="flex items-center gap-1.5">
+          <span className="font-semibold text-sm tracking-tight text-slate-900 dark:text-white">
+            Uroci Mail
+          </span>
+          <span className="text-[9px] font-semibold tracking-wide uppercase px-1.5 py-0.5 rounded-full bg-purple-100/70 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
+            Hybrid
+          </span>
         </div>
       </div>
 
-      {/* Global Search Bar */}
-      <div className="flex-1 max-w-2xl px-4">
+      {/* Global Search Bar - Apple Spotlight / Mail toolbar style */}
+      <div className="flex-1 max-w-xl px-4">
         <div className="relative group">
-          <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors">
-            <Search className="w-4 h-4" />
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none text-slate-400 group-focus-within:text-purple-600 dark:group-focus-within:text-purple-400 transition-colors">
+            <Search className="w-3.5 h-3.5" />
           </div>
           <input
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Buscar por remitente, asunto o contenido..."
-            className="w-full pl-10 pr-10 py-2.5 bg-slate-100/90 dark:bg-slate-800/90 hover:bg-slate-100 dark:hover:bg-slate-800 text-slate-800 dark:text-slate-100 text-sm rounded-full border border-transparent focus:border-purple-400 dark:focus:border-purple-600 focus:bg-white dark:focus:bg-slate-900 focus:shadow-sm focus:outline-none transition-all duration-200"
+            placeholder="Buscar en todos los buzones..."
+            className="w-full pl-9 pr-8 py-1.5 bg-[#eaeaf0]/70 dark:bg-[#252528]/80 hover:bg-[#e4e4ea] dark:hover:bg-[#2c2c30] text-slate-800 dark:text-slate-100 text-xs rounded-lg border border-transparent focus:border-purple-500/30 focus:bg-white dark:focus:bg-[#1c1c1e] focus:shadow-xs focus:outline-none transition-all duration-150 placeholder:text-slate-400"
           />
           {searchQuery && (
             <button
               onClick={() => setSearchQuery('')}
-              className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
+              className="absolute inset-y-0 right-0 pr-2.5 flex items-center text-slate-400 hover:text-slate-600 dark:hover:text-slate-200"
             >
-              <X className="w-4 h-4" />
+              <X className="w-3.5 h-3.5" />
             </button>
           )}
         </div>
       </div>
 
-      {/* Action buttons & Gmail Status */}
+      {/* Action buttons & Gmail Status - Apple sleek segmented controls */}
       <div className="flex items-center gap-2">
-        {/* Connection status badge / button */}
+        {/* Connection status badge */}
         <button
           onClick={onOpenConnectModal}
-          className={`flex items-center gap-2 px-3 py-1.5 rounded-full text-xs font-medium transition-all duration-200 border ${
+          className={`flex items-center gap-2 px-2.5 py-1 rounded-lg text-xs font-medium transition-all border ${
             status?.connected 
-              ? 'bg-emerald-50 dark:bg-emerald-950/40 text-emerald-700 dark:text-emerald-300 border-emerald-200 dark:border-emerald-800 hover:bg-emerald-100'
-              : 'bg-purple-50 dark:bg-purple-950/40 text-purple-700 dark:text-purple-300 border-purple-200 dark:border-purple-800 hover:bg-purple-100 shadow-sm'
+              ? 'bg-emerald-50/80 dark:bg-emerald-950/30 text-emerald-700 dark:text-emerald-300 border-emerald-200/60 dark:border-emerald-800/40 hover:bg-emerald-100/60'
+              : 'bg-purple-50/70 dark:bg-purple-950/30 text-purple-700 dark:text-purple-300 border-purple-200/60 dark:border-purple-800/40 hover:bg-purple-100/60'
           }`}
-          title="Configurar conexión con cuenta @gmail.com"
+          title="Configurar conexión con @gmail.com"
         >
-          <span className="relative flex h-2 w-2">
+          <span className="relative flex h-1.5 w-1.5">
             <span className={`animate-ping absolute inline-flex h-full w-full rounded-full opacity-75 ${
               status?.connected ? 'bg-emerald-400' : 'bg-purple-400'
             }`}></span>
-            <span className={`relative inline-flex rounded-full h-2 w-2 ${
+            <span className={`relative inline-flex rounded-full h-1.5 w-1.5 ${
               status?.connected ? 'bg-emerald-500' : 'bg-purple-600'
             }`}></span>
           </span>
-          <span className="hidden sm:inline">
+          <span className="hidden sm:inline text-[11px]">
             {status?.connected ? (status.email || 'Gmail Conectado') : 'Conectar @gmail.com'}
           </span>
           {!status?.connected && (
-            <span className="bg-purple-200/70 dark:bg-purple-800 text-purple-800 dark:text-purple-200 text-[10px] px-1 rounded font-semibold">
+            <span className="text-[10px] opacity-70 font-semibold">
               Demo
             </span>
           )}
@@ -102,25 +95,25 @@ export default function Navbar({
         <button
           onClick={onRefresh}
           disabled={isRefreshing}
-          className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors relative"
-          title="Actualizar correos"
+          className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-md transition-colors"
+          title="Comprobar correo nuevo"
         >
-          <RotateCw className={`w-4 h-4 transition-transform duration-700 ${isRefreshing ? 'animate-spin text-purple-600' : ''}`} />
+          <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-purple-600' : ''}`} />
         </button>
 
         {/* Dark mode toggle */}
         <button
           onClick={() => setDarkMode(!darkMode)}
-          className="p-2 text-slate-600 dark:text-slate-300 hover:bg-slate-100 dark:hover:bg-slate-800 rounded-full transition-colors"
-          title="Cambiar tema visual"
+          className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-md transition-colors"
+          title="Cambiar tema"
         >
-          {darkMode ? <Sun className="w-4 h-4 text-amber-400" /> : <Moon className="w-4 h-4" />}
+          {darkMode ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5" />}
         </button>
 
         {/* User Avatar */}
         <div 
           onClick={onOpenConnectModal}
-          className="w-8 h-8 rounded-full yahoo-gradient flex items-center justify-center text-white text-xs font-bold cursor-pointer ring-2 ring-purple-100 dark:ring-purple-900/40 hover:opacity-90 transition-opacity ml-1 shadow-sm"
+          className="w-7 h-7 rounded-full yahoo-apple-gradient flex items-center justify-center text-white text-[11px] font-semibold cursor-pointer shadow-xs ml-0.5"
           title="Gestionar cuenta"
         >
           {status?.email ? status.email[0].toUpperCase() : 'U'}

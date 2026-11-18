@@ -9,12 +9,8 @@ import {
   Paperclip, 
   Bold, 
   Italic, 
-  Underline, 
-  List, 
-  Link2, 
-  Smile, 
   Trash2,
-  Sparkles
+  Smile
 } from 'lucide-react';
 
 export default function ComposeModal({ 
@@ -32,7 +28,6 @@ export default function ComposeModal({
   const [isMaximized, setIsMaximized] = useState(false);
   const [isSending, setIsSending] = useState(false);
 
-  // Sync if initialData changes
   React.useEffect(() => {
     if (initialData.to !== undefined) setTo(initialData.to);
     if (initialData.subject !== undefined) setSubject(initialData.subject);
@@ -61,26 +56,20 @@ export default function ComposeModal({
   // Minimized floating bar
   if (isMinimized) {
     return (
-      <div className="fixed bottom-0 right-8 z-50 bg-white dark:bg-slate-900 border border-purple-200 dark:border-purple-800 rounded-t-xl shadow-xl w-72 flex items-center justify-between px-4 py-2.5 cursor-pointer hover:bg-purple-50/50 transition-all">
+      <div className="fixed bottom-0 right-6 z-50 bg-white dark:bg-[#1e1e20] border border-black/[0.08] dark:border-white/[0.08] rounded-t-xl shadow-lg w-72 flex items-center justify-between px-3.5 py-2 cursor-pointer hover:bg-slate-50 transition-all select-none">
         <div 
           onClick={() => setIsMinimized(false)}
-          className="flex items-center gap-2 truncate font-semibold text-xs text-purple-900 dark:text-purple-300 flex-1"
+          className="flex items-center gap-2 truncate font-medium text-xs text-slate-800 dark:text-slate-200 flex-1"
         >
-          <span className="w-2 h-2 rounded-full bg-purple-600 animate-pulse"></span>
+          <span className="w-1.5 h-1.5 rounded-full bg-purple-600"></span>
           <span className="truncate">{subject || 'Nuevo mensaje'}</span>
         </div>
-        <div className="flex items-center gap-1">
-          <button 
-            onClick={() => setIsMinimized(false)} 
-            className="p-1 text-slate-400 hover:text-slate-600 rounded"
-          >
-            <Maximize2 className="w-3.5 h-3.5" />
+        <div className="flex items-center gap-1 text-slate-400">
+          <button onClick={() => setIsMinimized(false)} className="p-1 hover:text-slate-600">
+            <Maximize2 className="w-3 h-3" />
           </button>
-          <button 
-            onClick={onClose} 
-            className="p-1 text-slate-400 hover:text-slate-600 rounded"
-          >
-            <X className="w-3.5 h-3.5" />
+          <button onClick={onClose} className="p-1 hover:text-slate-600">
+            <X className="w-3 h-3" />
           </button>
         </div>
       </div>
@@ -90,163 +79,160 @@ export default function ComposeModal({
   return (
     <AnimatePresence>
       <motion.div
-        initial={{ opacity: 0, y: 30, scale: 0.96 }}
+        initial={{ opacity: 0, y: 15, scale: 0.98 }}
         animate={{ opacity: 1, y: 0, scale: 1 }}
-        exit={{ opacity: 0, y: 30, scale: 0.96 }}
-        transition={{ duration: 0.2 }}
-        className={`fixed z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-floating flex flex-col overflow-hidden transition-all duration-200 ${
+        exit={{ opacity: 0, y: 15, scale: 0.98 }}
+        transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
+        className={`fixed z-50 bg-white dark:bg-[#1c1c1e] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-150 ${
           isMaximized
             ? 'inset-6 max-w-4xl mx-auto my-auto h-[90vh]'
-            : 'bottom-4 right-6 w-full max-w-xl h-[560px]'
+            : 'bottom-4 right-6 w-full max-w-lg h-[500px]'
         }`}
       >
-        {/* Header bar (Yahoo style) */}
-        <div className="yahoo-gradient px-4 py-3 flex items-center justify-between text-white select-none">
+        {/* Apple window style header */}
+        <div className="px-4 py-2.5 bg-[#f5f5f7]/80 dark:bg-[#252528]/80 border-b border-black/[0.06] dark:border-white/[0.06] flex items-center justify-between select-none">
           <div className="flex items-center gap-2">
-            <span className="font-semibold text-sm">Mensaje nuevo</span>
-          </div>
-          <div className="flex items-center gap-1.5">
-            <button
-              onClick={() => setIsMinimized(true)}
-              className="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
-              title="Minimizar"
-            >
-              <Minus className="w-4 h-4" />
-            </button>
-            <button
-              onClick={() => setIsMaximized(!isMaximized)}
-              className="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
-              title={isMaximized ? "Restaurar" : "Maximizar"}
-            >
-              {isMaximized ? <Minimize2 className="w-4 h-4" /> : <Maximize2 className="w-4 h-4" />}
-            </button>
-            <button
-              onClick={onClose}
-              className="p-1 text-white/80 hover:text-white hover:bg-white/10 rounded transition-colors"
-              title="Cerrar"
-            >
-              <X className="w-4 h-4" />
-            </button>
+            <div className="flex items-center gap-1.5 mr-2">
+              <button 
+                type="button" 
+                onClick={onClose}
+                className="w-3 h-3 rounded-full bg-[#ff5f56] border border-[#e0443e] hover:brightness-90 transition-all"
+                title="Cerrar"
+              />
+              <button 
+                type="button" 
+                onClick={() => setIsMinimized(true)}
+                className="w-3 h-3 rounded-full bg-[#ffbd2e] border border-[#dea123] hover:brightness-90 transition-all"
+                title="Minimizar"
+              />
+              <button 
+                type="button" 
+                onClick={() => setIsMaximized(!isMaximized)}
+                className="w-3 h-3 rounded-full bg-[#27c93f] border border-[#1aab29] hover:brightness-90 transition-all"
+                title="Maximizar"
+              />
+            </div>
+            <span className="font-semibold text-xs text-slate-800 dark:text-slate-200">
+              Nuevo mensaje
+            </span>
           </div>
         </div>
 
         {/* Form */}
         <form onSubmit={handleSubmit} className="flex-1 flex flex-col justify-between">
-          <div className="divide-y divide-slate-100 dark:divide-slate-800">
-            {/* To field */}
+          <div className="divide-y divide-black/[0.04] dark:divide-white/[0.04]">
+            {/* To */}
             <div className="flex items-center px-4 py-2">
-              <label className="w-14 text-xs font-semibold text-slate-400 dark:text-slate-500">Para:</label>
+              <label className="w-12 text-xs text-slate-400 dark:text-slate-500 font-medium">Para:</label>
               <input
                 type="email"
                 required
                 value={to}
                 onChange={(e) => setTo(e.target.value)}
-                placeholder="ejemplo@correo.com"
-                className="flex-1 text-sm bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0"
+                placeholder="destinatario@correo.com"
+                className="flex-1 text-xs bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0"
               />
               {!showCc && (
                 <button
                   type="button"
                   onClick={() => setShowCc(true)}
-                  className="text-xs text-purple-600 dark:text-purple-400 hover:underline font-medium"
+                  className="text-[11px] text-purple-600 dark:text-purple-400 hover:underline"
                 >
                   CC
                 </button>
               )}
             </div>
 
-            {/* CC field if toggled */}
+            {/* CC */}
             {showCc && (
               <div className="flex items-center px-4 py-2">
-                <label className="w-14 text-xs font-semibold text-slate-400 dark:text-slate-500">CC:</label>
+                <label className="w-12 text-xs text-slate-400 dark:text-slate-500 font-medium">CC:</label>
                 <input
                   type="email"
                   value={cc}
                   onChange={(e) => setCc(e.target.value)}
                   placeholder="copia@correo.com"
-                  className="flex-1 text-sm bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0"
+                  className="flex-1 text-xs bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0"
                 />
               </div>
             )}
 
-            {/* Subject field */}
+            {/* Subject */}
             <div className="flex items-center px-4 py-2">
-              <label className="w-14 text-xs font-semibold text-slate-400 dark:text-slate-500">Asunto:</label>
+              <label className="w-12 text-xs text-slate-400 dark:text-slate-500 font-medium">Asunto:</label>
               <input
                 type="text"
                 required
                 value={subject}
                 onChange={(e) => setSubject(e.target.value)}
-                placeholder="Asunto del correo"
-                className="flex-1 text-sm font-medium bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0"
+                placeholder="Escribe el asunto"
+                className="flex-1 text-xs font-medium bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0"
               />
             </div>
           </div>
 
-          {/* Body field */}
+          {/* Body */}
           <div className="flex-1 p-4">
             <textarea
               value={body}
               onChange={(e) => setBody(e.target.value)}
-              placeholder="Escribe tu mensaje aquí..."
-              className="w-full h-full text-sm bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0 resize-none leading-relaxed"
+              placeholder="Escribe el contenido..."
+              className="w-full h-full text-xs bg-transparent border-none text-slate-800 dark:text-slate-100 focus:outline-none focus:ring-0 resize-none leading-relaxed"
             />
           </div>
 
-          {/* Bottom Actions & Formatting Toolbar */}
-          <div className="p-3 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between bg-slate-50/50 dark:bg-slate-900/60">
-            {/* Formatting tools */}
-            <div className="flex items-center gap-1 text-slate-400 dark:text-slate-500">
+          {/* Bottom Toolbar */}
+          <div className="p-2.5 border-t border-black/[0.04] dark:border-white/[0.06] flex items-center justify-between bg-[#fbfbfd] dark:bg-[#1c1c1e]">
+            <div className="flex items-center gap-0.5 text-slate-400">
               <button 
                 type="button" 
                 onClick={() => setBody(prev => prev + " **texto** ")}
-                className="p-1.5 hover:text-purple-600 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 hover:text-slate-700 dark:hover:text-white rounded"
                 title="Negrita"
               >
-                <Bold className="w-4 h-4" />
+                <Bold className="w-3.5 h-3.5" />
               </button>
               <button 
                 type="button" 
                 onClick={() => setBody(prev => prev + " *cursiva* ")}
-                className="p-1.5 hover:text-purple-600 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 hover:text-slate-700 dark:hover:text-white rounded"
                 title="Cursiva"
               >
-                <Italic className="w-4 h-4" />
+                <Italic className="w-3.5 h-3.5" />
               </button>
               <button 
                 type="button" 
-                onClick={() => alert("Función para adjuntar archivo")}
-                className="p-1.5 hover:text-purple-600 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded transition-colors"
+                onClick={() => alert("Adjuntar archivo")}
+                className="p-1 hover:text-slate-700 dark:hover:text-white rounded"
                 title="Adjuntar archivo"
               >
-                <Paperclip className="w-4 h-4" />
+                <Paperclip className="w-3.5 h-3.5" />
               </button>
               <button 
                 type="button" 
                 onClick={() => setBody(prev => prev + " 😊 ")}
-                className="p-1.5 hover:text-purple-600 hover:bg-slate-200/60 dark:hover:bg-slate-800 rounded transition-colors"
+                className="p-1 hover:text-slate-700 dark:hover:text-white rounded"
                 title="Emoji"
               >
-                <Smile className="w-4 h-4" />
+                <Smile className="w-3.5 h-3.5" />
               </button>
             </div>
 
-            {/* Send & Discard */}
             <div className="flex items-center gap-2">
               <button
                 type="button"
                 onClick={onClose}
-                className="p-2 text-slate-400 hover:text-rose-600 rounded-lg transition-colors"
-                title="Descartar borrador"
+                className="p-1 text-slate-400 hover:text-rose-600 rounded"
+                title="Descartar"
               >
-                <Trash2 className="w-4 h-4" />
+                <Trash2 className="w-3.5 h-3.5" />
               </button>
               <button
                 type="submit"
                 disabled={isSending}
-                className="yahoo-gradient hover:opacity-95 disabled:opacity-50 text-white font-semibold px-5 py-2 rounded-xl text-xs flex items-center gap-2 shadow-md shadow-purple-600/20 active:scale-95 transition-all"
+                className="yahoo-apple-gradient hover:brightness-105 disabled:opacity-40 text-white font-medium px-4 py-1.5 rounded-lg text-xs flex items-center gap-1.5 shadow-sm transition-all"
               >
-                <Send className={`w-3.5 h-3.5 ${isSending ? 'animate-bounce' : ''}`} />
+                <Send className="w-3 h-3" />
                 <span>{isSending ? 'Enviando...' : 'Enviar'}</span>
               </button>
             </div>
