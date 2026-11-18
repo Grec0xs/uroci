@@ -1,0 +1,844 @@
+/* ==========================================================================
+   Engineering Notebook — an Obsidian app theme
+   Design system: blueprint + copper.
+   Light mode is pale blueprint paper with a faint graph-paper grid; dark mode is
+   deep navy with the same grid. Uppercase ruled headings, copper accent, full
+   grid tables, 2px radii. Tabular numerals for measurements.
+   Original CSS by U3 Theme Factory. MIT licensed. No remote assets.
+   Requires core variables introduced through Obsidian 1.1 (callout variables).
+   ========================================================================== */
+
+/* ---------- shared tokens (both modes) ---------------------------------- */
+body {
+  --eng-radius: 2px;
+  --eng-rule-w: 1px;
+  --eng-grid-size: 24px;
+
+  --font-text-theme: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-interface-theme: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+    "Helvetica Neue", Arial, sans-serif;
+  --font-monospace-theme: ui-monospace, SFMono-Regular, "SF Mono", Menlo,
+    Consolas, "Liberation Mono", monospace;
+
+  --font-text-size: 16px;
+  --font-monospace-size: 13.5px;
+  --line-height-normal: 1.62;
+  --line-height-tight: 1.3;
+
+  --h1-size: 1.75em;
+  --h2-size: 1.42em;
+  --h3-size: 1.2em;
+  --h4-size: 1.1em;
+  --h5-size: 0.9em;
+  --h6-size: 0.82em;
+  --h1-weight: 700;
+  --h2-weight: 700;
+  --h3-weight: 700;
+  --h4-weight: 600;
+  --h5-weight: 700;
+  --h6-weight: 700;
+
+  --bold-weight: 700;
+  --tag-size: 0.78em;
+  --checkbox-size: 1.02em;
+  --checkbox-radius: var(--eng-radius);
+  --radius-s: var(--eng-radius);
+  --radius-m: var(--eng-radius);
+  --radius-l: calc(var(--eng-radius) * 2);
+
+  --code-size: var(--font-monospace-size);
+  --code-line-height: 1.55;
+  --table-header-weight: 700;
+  --table-text-size: 0.92em;
+  --font-variant-numeric: tabular-nums;
+
+  --link-decoration: underline;
+  --link-decoration-hover: underline;
+  --link-decoration-thickness: 1px;
+  --link-unresolved-opacity: 1;
+  --link-unresolved-decoration-style: dashed;
+
+  --input-hover-border-color: var(--eng-accent);
+  --input-focus-border-color: var(--eng-accent);
+}
+
+/* ---------- dark mode (deep navy blueprint) ---------------------------- */
+.theme-dark {
+  --accent-h: 28; --accent-s: 64%; --accent-l: 58%;
+  --eng-bg: #0c1a2b;
+  --eng-bg-2: #08131f;
+  --eng-bg-3: #102336;
+  --eng-ink: #d6e2ee;
+  --eng-ink-muted: #94a9bf;
+  --eng-ink-faint: #9aafc5;
+  --eng-rule: #657f99;
+  --eng-rule-strong: #718ba5;
+  --eng-accent: #d98a4e;
+  --eng-accent-strong: #e0975c;
+  --eng-link: #7fb2e6;
+  --eng-link-hover: #a9cdf2;
+  --eng-grid: rgba(127, 178, 230, 0.035);
+  --eng-code-bg: #071525;
+  --eng-selection: #1c3a5c;
+  --eng-highlight: rgba(217, 138, 78, 0.30);
+
+  --background-primary: var(--eng-bg);
+  --background-primary-alt: var(--eng-bg-3);
+  --background-secondary: var(--eng-bg-2);
+  --background-secondary-alt: var(--eng-bg-3);
+  --background-modifier-border: var(--eng-rule);
+  --background-modifier-border-hover: var(--eng-rule-strong);
+  --background-modifier-border-focus: var(--eng-accent);
+  --background-modifier-hover: rgba(127, 178, 230, 0.07);
+  --background-modifier-active-hover: rgba(127, 178, 230, 0.12);
+  --background-modifier-form-field: var(--eng-bg-2);
+  --background-modifier-cover: rgba(5, 10, 17, 0.88);
+
+  --text-normal: var(--eng-ink);
+  --text-muted: var(--eng-ink-muted);
+  --text-faint: var(--eng-ink-faint);
+  --text-on-accent: #1a1006;
+  --text-accent: var(--eng-accent-strong);
+  --text-accent-hover: #edaa76;
+  --text-selection: var(--eng-selection);
+  --text-highlight-bg: var(--eng-highlight);
+
+  --interactive-normal: #1a3552;
+  --interactive-hover: #22415f;
+  --interactive-accent: hsl(var(--accent-h), var(--accent-s), max(var(--accent-l), 75%));
+  --interactive-accent-hover: hsl(var(--accent-h), var(--accent-s), max(calc(var(--accent-l) + 6%), 80%));
+
+  --link-color: var(--eng-link);
+  --link-color-hover: var(--eng-link-hover);
+  --link-external-color: var(--eng-link);
+  --link-external-color-hover: var(--eng-link-hover);
+  --link-unresolved-color: var(--eng-ink-faint);
+
+  --tag-color: var(--eng-accent-strong);
+  --tag-background: rgba(217, 138, 78, 0.14);
+  --tag-background-hover: rgba(217, 138, 78, 0.22);
+  --tag-color-hover: var(--eng-accent-strong);
+
+  --code-background: var(--eng-code-bg);
+  --code-normal: var(--eng-ink);
+  --code-comment: #9caebd;
+  --code-function: #9ac1d3;
+  --code-important: #f0b08c;
+  --code-keyword: #ddb181;
+  --code-operator: #acc8d0;
+  --code-property: #9ac1d3;
+  --code-punctuation: #9caebd;
+  --code-string: #a5c9b4;
+  --code-tag: #ddb181;
+  --code-value: #c9b3cb;
+
+  --table-border-color: var(--eng-rule-strong);
+  --table-header-background: rgba(127, 178, 230, 0.09);
+  --table-header-background-hover: rgba(127, 178, 230, 0.13);
+  --table-row-background-hover: rgba(127, 178, 230, 0.05);
+  --table-selection: var(--eng-selection);
+  --table-selection-border-color: var(--eng-accent);
+
+  --checkbox-border-color: var(--eng-rule-strong);
+  --checkbox-border-color-hover: var(--eng-accent);
+  --checkbox-color: var(--interactive-accent);
+  --checkbox-color-hover: var(--interactive-accent-hover);
+  --checkbox-marker-color: #1a1006;
+  --checklist-done-color: var(--eng-ink-faint);
+
+  --nav-item-color: var(--eng-ink-muted);
+  --nav-item-color-hover: var(--eng-ink);
+  --nav-item-color-active: var(--eng-ink);
+  --nav-item-background-hover: rgba(127, 178, 230, 0.07);
+  --nav-item-background-active: rgba(217, 138, 78, 0.16);
+  --nav-item-color-selected: var(--eng-accent-strong);
+  --nav-indentation-guide-color: #16304a;
+
+  --tab-text-color: var(--eng-ink-muted);
+  --tab-text-color-focused: var(--eng-ink);
+  --tab-text-color-focused-active: var(--eng-ink);
+  --tab-background-active: var(--eng-bg);
+  --tab-outline-color: var(--eng-rule);
+
+  --ribbon-background: var(--eng-bg-2);
+  --titlebar-background: var(--eng-bg-2);
+  --titlebar-background-focused: var(--eng-bg-2);
+  --status-bar-background: var(--eng-bg-2);
+  --status-bar-text-color: var(--eng-ink-muted);
+  --divider-color: var(--eng-rule);
+  --scrollbar-thumb-bg: #1d3350;
+  --scrollbar-active-thumb-bg: #2a4a6e;
+  --modal-background: var(--eng-bg-3);
+  --modal-border-color: var(--eng-rule);
+}
+
+/* ---------- light mode (pale blueprint paper) -------------------------- */
+.theme-light {
+  --accent-h: 29; --accent-s: 64%; --accent-l: 36%;
+  --eng-bg: #eef3f8;
+  --eng-bg-2: #e2eaf2;
+  --eng-bg-3: #e8eff5;
+  --eng-ink: #16283c;
+  --eng-ink-muted: #4a5f76;
+  --eng-ink-faint: #51677e;
+  --eng-rule: #6b7e91;
+  --eng-rule-strong: #60758a;
+  --eng-accent: #9a5a22;
+  --eng-accent-strong: #7f4a1b;
+  --eng-link: #1c5fa8;
+  --eng-link-hover: #124b8a;
+  --eng-grid: rgba(28, 95, 168, 0.035);
+  --eng-code-bg: #e6eef6;
+  --eng-selection: #c6dcf3;
+  --eng-highlight: rgba(217, 138, 78, 0.32);
+
+  --background-primary: var(--eng-bg);
+  --background-primary-alt: var(--eng-bg-3);
+  --background-secondary: var(--eng-bg-2);
+  --background-secondary-alt: var(--eng-bg-3);
+  --background-modifier-border: var(--eng-rule);
+  --background-modifier-border-hover: var(--eng-rule-strong);
+  --background-modifier-border-focus: var(--eng-accent);
+  --background-modifier-hover: rgba(22, 40, 60, 0.05);
+  --background-modifier-active-hover: rgba(22, 40, 60, 0.09);
+  --background-modifier-form-field: #ffffff;
+  --background-modifier-cover: rgba(40, 55, 75, 0.5);
+
+  --text-normal: var(--eng-ink);
+  --text-muted: var(--eng-ink-muted);
+  --text-faint: var(--eng-ink-faint);
+  --text-on-accent: #ffffff;
+  --text-accent: var(--eng-accent-strong);
+  --text-accent-hover: #6a3d14;
+  --text-selection: var(--eng-selection);
+  --text-highlight-bg: var(--eng-highlight);
+
+  --interactive-normal: #e3ebf3;
+  --interactive-hover: #d8e3ee;
+  --interactive-accent: hsl(var(--accent-h), var(--accent-s), min(var(--accent-l), 23%));
+  --interactive-accent-hover: hsl(var(--accent-h), var(--accent-s), min(calc(var(--accent-l) - 6%), 20%));
+
+  --link-color: var(--eng-link);
+  --link-color-hover: var(--eng-link-hover);
+  --link-external-color: var(--eng-link);
+  --link-external-color-hover: var(--eng-link-hover);
+  --link-unresolved-color: var(--eng-ink-faint);
+
+  --tag-color: var(--eng-accent-strong);
+  --tag-background: rgba(154, 90, 34, 0.12);
+  --tag-background-hover: rgba(154, 90, 34, 0.20);
+  --tag-color-hover: var(--eng-accent-strong);
+
+  --code-background: var(--eng-code-bg);
+  --code-normal: var(--eng-ink);
+  --code-comment: #506879;
+  --code-function: #2f6483;
+  --code-important: #a14430;
+  --code-keyword: #81502f;
+  --code-operator: #345d70;
+  --code-property: #2f6483;
+  --code-punctuation: #506879;
+  --code-string: #3f6d61;
+  --code-tag: #81502f;
+  --code-value: #6d577b;
+
+  --table-border-color: var(--eng-rule-strong);
+  --table-header-background: rgba(28, 95, 168, 0.09);
+  --table-header-background-hover: rgba(28, 95, 168, 0.13);
+  --table-row-background-hover: rgba(22, 40, 60, 0.04);
+  --table-selection: var(--eng-selection);
+  --table-selection-border-color: var(--eng-accent);
+
+  --checkbox-border-color: var(--eng-rule-strong);
+  --checkbox-border-color-hover: var(--eng-accent);
+  --checkbox-color: var(--interactive-accent);
+  --checkbox-color-hover: var(--interactive-accent-hover);
+  --checkbox-marker-color: #ffffff;
+  --checklist-done-color: var(--eng-ink-faint);
+
+  --nav-item-color: var(--eng-ink-muted);
+  --nav-item-color-hover: var(--eng-ink);
+  --nav-item-color-active: var(--eng-ink);
+  --nav-item-background-hover: rgba(22, 40, 60, 0.05);
+  --nav-item-background-active: rgba(154, 90, 34, 0.14);
+  --nav-item-color-selected: var(--eng-accent-strong);
+  --nav-indentation-guide-color: #cfdbe8;
+
+  --tab-text-color: var(--eng-ink-muted);
+  --tab-text-color-focused: var(--eng-ink);
+  --tab-text-color-focused-active: var(--eng-ink);
+  --tab-background-active: var(--eng-bg);
+  --tab-outline-color: var(--eng-rule);
+
+  --ribbon-background: var(--eng-bg-2);
+  --titlebar-background: var(--eng-bg-2);
+  --titlebar-background-focused: var(--eng-bg-2);
+  --status-bar-background: var(--eng-bg-2);
+  --status-bar-text-color: var(--eng-ink-muted);
+  --divider-color: var(--eng-rule);
+  --scrollbar-thumb-bg: #c6d4e2;
+  --scrollbar-active-thumb-bg: #a9bcd0;
+  --modal-background: #ffffff;
+  --modal-border-color: var(--eng-rule);
+}
+
+/* ---------- blueprint grid on reading and editing surfaces ------------- */
+.markdown-preview-view {
+  background-image: linear-gradient(var(--eng-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--eng-grid) 1px, transparent 1px);
+  background-size: var(--eng-grid-size) var(--eng-grid-size);
+  background-position: -1px -1px;
+}
+.markdown-source-view.mod-cm6 .cm-scroller {
+  background-image: linear-gradient(var(--eng-grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--eng-grid) 1px, transparent 1px);
+  background-size: var(--eng-grid-size) var(--eng-grid-size);
+  background-position: -1px -1px;
+}
+
+/* ---------- headings: ruled sheet titles ------------------------------- */
+.markdown-rendered h1,
+.markdown-preview-view h1,
+.cm-line.HyperMD-header-1 {
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  border-bottom: 2px solid var(--eng-accent);
+  padding-bottom: 0.18em;
+}
+.markdown-rendered h2,
+.markdown-preview-view h2,
+.cm-line.HyperMD-header-2 {
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  border-bottom: 1px solid var(--eng-rule-strong);
+  padding-bottom: 0.16em;
+}
+.markdown-rendered h3,
+.markdown-preview-view h3 {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+  color: var(--eng-accent-strong);
+}
+.markdown-rendered h4,
+.markdown-preview-view h4,
+.markdown-rendered h5,
+.markdown-preview-view h5,
+.markdown-rendered h6,
+.markdown-preview-view h6 { color: var(--eng-ink-muted); }
+
+/* ---------- links ------------------------------------------------------- */
+.markdown-rendered a.internal-link:hover,
+.markdown-preview-view a.internal-link:hover,
+.markdown-rendered a.external-link:hover,
+.markdown-preview-view a.external-link:hover { text-decoration: underline; text-underline-offset: 2px; }
+
+/* ---------- lists ------------------------------------------------------- */
+.markdown-rendered ul,
+.markdown-preview-view ul { padding-inline-start: 1.1em; }
+.markdown-rendered ol,
+.markdown-preview-view ol { padding-inline-start: 1.3em; }
+.markdown-rendered li::marker,
+.markdown-preview-view li::marker { color: var(--eng-accent); font-variant-numeric: tabular-nums; }
+.markdown-rendered li,
+.markdown-preview-view li { margin-block: 0.1em; }
+
+/* ---------- tasks ------------------------------------------------------- */
+.markdown-rendered .task-list-item,
+.markdown-preview-view .task-list-item { list-style: none; }
+.markdown-rendered input[type="checkbox"],
+.markdown-preview-view input[type="checkbox"],
+.markdown-source-view input[type="checkbox"] { border-radius: var(--eng-radius); border-width: 1.5px; }
+.markdown-rendered .task-list-item.is-checked,
+.markdown-preview-view .task-list-item.is-checked { color: var(--checklist-done-color); text-decoration: none; }
+
+/* ---------- blockquote: spec callout ----------------------------------- */
+.markdown-rendered blockquote,
+.markdown-preview-view blockquote {
+  border-left: 3px solid var(--eng-accent);
+  border-radius: 0;
+  background: var(--eng-bg-3);
+  padding: 0.4em 0.9em;
+  color: var(--text-muted);
+}
+
+/* ---------- callouts: stamped spec blocks ------------------------------ */
+.callout {
+  --callout-radius: var(--eng-radius);
+  --callout-border-width: 1px;
+  --callout-border-opacity: 1;
+  --callout-padding: 0.7em 1em;
+  --callout-title-size: 0.85em;
+  --callout-title-weight: 700;
+  --callout-content-padding: 0 0 0.05em 0;
+  --callout-blend-mode: normal;
+}
+.callout .callout-title { text-transform: uppercase; letter-spacing: 0.05em; }
+.callout[data-callout="note"],
+.callout[data-callout="info"],
+.callout[data-callout="todo"] { --callout-color: 127, 178, 230; }
+.callout[data-callout="abstract"],
+.callout[data-callout="summary"],
+.callout[data-callout="tldr"] { --callout-color: 154, 90, 34; }
+.callout[data-callout="tip"],
+.callout[data-callout="hint"],
+.callout[data-callout="success"],
+.callout[data-callout="check"],
+.callout[data-callout="done"] { --callout-color: 63, 145, 91; }
+.callout[data-callout="question"],
+.callout[data-callout="help"],
+.callout[data-callout="faq"] { --callout-color: 130, 80, 223; }
+.callout[data-callout="warning"],
+.callout[data-callout="caution"],
+.callout[data-callout="attention"] { --callout-color: 176, 122, 31; }
+.callout[data-callout="failure"],
+.callout[data-callout="fail"],
+.callout[data-callout="missing"],
+.callout[data-callout="danger"],
+.callout[data-callout="error"],
+.callout[data-callout="bug"] { --callout-color: 190, 62, 54; }
+.callout[data-callout="example"] { --callout-color: 74, 95, 118; }
+.callout[data-callout="quote"],
+.callout[data-callout="cite"] { --callout-color: 116, 136, 160; }
+
+/* ---------- tables: full blueprint grid -------------------------------- */
+.markdown-rendered table,
+.markdown-preview-view table {
+  border-collapse: collapse;
+  border: 1px solid var(--eng-rule-strong);
+  font-size: var(--table-text-size);
+  font-variant-numeric: tabular-nums;
+}
+.markdown-rendered th,
+.markdown-preview-view th { border: 1px solid var(--eng-rule-strong); text-align: left; }
+.markdown-rendered td,
+.markdown-preview-view td { border: 1px solid var(--eng-rule-strong); }
+
+/* ---------- inline & fenced code --------------------------------------- */
+.markdown-rendered code,
+.markdown-preview-view code,
+.cm-inline-code {
+  background: var(--eng-code-bg);
+  border: 1px solid var(--eng-rule);
+  border-radius: var(--eng-radius);
+  padding: 0.08em 0.35em;
+  font-size: 0.88em;
+}
+.markdown-rendered pre,
+.markdown-preview-view pre {
+  background: var(--eng-code-bg);
+  border: 1px solid var(--eng-rule-strong);
+  border-radius: var(--eng-radius);
+  padding: 0.9em 1em;
+  line-height: var(--code-line-height);
+}
+.markdown-rendered pre code,
+.markdown-preview-view pre code { border: none; background: transparent; padding: 0; }
+.markdown-source-view.mod-cm6 .HyperMD-codeblock-bg { background: var(--eng-code-bg); }
+
+/* ---------- horizontal rule -------------------------------------------- */
+.markdown-rendered hr,
+.markdown-preview-view hr { border: none; border-top: 1px solid var(--eng-rule-strong); height: 0; }
+
+/* ---------- tags ------------------------------------------------------- */
+.markdown-rendered a.tag,
+.markdown-preview-view .tag,
+.cm-hashtag { border-radius: var(--eng-radius); padding: 0.05em 0.5em; border: 1px solid var(--eng-rule-strong); }
+
+/* ---------- search ----------------------------------------------------- */
+.search-result-file-matched-text { background: var(--eng-highlight); color: var(--text-normal); }
+.search-input-container input { border-radius: var(--eng-radius); }
+
+/* ---------- settings --------------------------------------------------- */
+.vertical-tab-nav-item.is-active { background: var(--interactive-accent); color: var(--text-on-accent); }
+.setting-item { border-top: 1px solid var(--background-modifier-border); }
+.setting-item-name { font-weight: 700; }
+
+/* ---------- tabs ------------------------------------------------------- */
+.workspace-tab-header.is-active { box-shadow: inset 0 -2px 0 var(--eng-accent); }
+
+/* ---------- navigation ------------------------------------------------- */
+.nav-file-title,
+.nav-folder-title { border-radius: var(--eng-radius); }
+.nav-file-title.is-active { font-weight: 700; }
+
+/* ---------- focus ------------------------------------------------------ */
+:focus-visible { outline: 2px solid var(--eng-accent); outline-offset: 2px; }
+input:focus, textarea:focus, select:focus { border-color: var(--eng-accent); box-shadow: none; }
+
+/* ---------- reduced motion --------------------------------------------- */
+@media (prefers-reduced-motion: reduce) {
+  html body:is(.theme-light, .theme-dark) *,
+  html body:is(.theme-light, .theme-dark) *::before,
+  html body:is(.theme-light, .theme-dark) *::after {
+    scroll-behavior: auto;
+    transition-duration: 0s;
+    animation-duration: 0s;
+    animation-iteration-count: 1;
+  }
+}
+
+/* Revision 1.0.2: measured structural rules and complete notebook blocks.
+   The low-contrast graph is decorative. Borders convey groups and controls. */
+body {
+  --h1-color: var(--eng-ink);
+  --h2-color: var(--eng-ink);
+  --h3-color: var(--eng-accent-strong);
+  --h4-color: var(--eng-ink-muted);
+  --h5-color: var(--eng-ink-muted);
+  --h6-color: var(--eng-ink-muted);
+  --hr-color: var(--eng-rule-strong);
+  --blockquote-border-color: var(--eng-accent);
+  --indentation-guide-color: var(--eng-rule);
+  --list-marker-color: var(--eng-accent);
+  --list-marker-color-collapsed: var(--eng-accent-strong);
+  --embed-border-start: 3px solid var(--eng-accent);
+  --embed-padding: 0.75em 1em;
+  --table-header-color: var(--eng-ink);
+  --table-header-background: var(--eng-bg-2);
+  --table-header-background-hover: var(--eng-bg-3);
+}
+
+/* Reading and Live Preview share the same link cues and heading hierarchy. */
+body .markdown-rendered a:not(.tag),
+body .cm-s-obsidian :is(.cm-link, .cm-url, .cm-hmd-internal-link) {
+  text-decoration-line: underline;
+  text-decoration-thickness: 1px;
+  text-underline-offset: 0.18em;
+}
+body .markdown-rendered a.is-unresolved {
+  opacity: 1;
+  color: var(--text-muted);
+  text-decoration-style: dashed;
+}
+body .cm-line.HyperMD-header-3 {
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+body :is(.markdown-rendered h5, .HyperMD-header-5) { letter-spacing: 0.035em; }
+body :is(.markdown-rendered h6, .HyperMD-header-6) { font-style: italic; }
+body .callout {
+  color: var(--eng-ink);
+  background: var(--eng-bg-3);
+  border-color: var(--eng-rule-strong);
+  border-inline-start: 3px solid var(--eng-accent);
+  mix-blend-mode: normal;
+}
+body .callout :is(.callout-title, .callout-icon) { color: var(--eng-accent-strong); }
+body .callout .callout-content { color: var(--eng-ink); }
+body .markdown-embed {
+  background: var(--eng-bg-3);
+  border: 1px solid var(--eng-rule-strong);
+  border-inline-start: var(--embed-border-start);
+  border-radius: var(--eng-radius);
+}
+body .markdown-rendered :is(th, td) { padding: 0.45em 0.7em; }
+body .markdown-rendered table { background: var(--eng-bg); }
+body .markdown-rendered .tag { text-decoration: none; font-weight: 600; }
+body .nav-file-title.is-active { box-shadow: inset 3px 0 var(--eng-accent); }
+body .workspace-tab-header.is-active .workspace-tab-header-inner-title { font-weight: 700; }
+
+/* The outline offset leaves a surface-colored gap around accent controls. */
+body :is(button, a, input, textarea, select, [tabindex],
+  .clickable-icon, .checkbox-container):focus-visible {
+  outline: 2px solid var(--eng-accent-strong);
+  outline-offset: 3px;
+  box-shadow: none;
+}
+body :is(input, textarea, select):focus { border-color: var(--eng-accent-strong); }
+@media (max-width: 600px) {
+  body { --h1-size: 1.5em; --h2-size: 1.3em; }
+  .markdown-rendered h1 { overflow-wrap: anywhere; }
+  .markdown-rendered pre { padding: 0.7em; }
+}
+
+/* Match the framed code panel in Live Preview without changing line padding. */
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock-bg {
+  border-inline: 1px solid var(--eng-rule-strong);
+}
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock-begin-bg {
+  border-top: 1px solid var(--eng-rule-strong);
+}
+body .markdown-source-view.mod-cm6 .HyperMD-codeblock-end-bg {
+  border-bottom: 1px solid var(--eng-rule-strong);
+}
+
+/* Current Settings chrome uses a more specific selector for its active row. */
+body .vertical-tab-header .vertical-tab-nav-item.is-active,
+body .vertical-tab-nav-item.is-active {
+  background-color: var(--eng-accent);
+  color: var(--text-on-accent);
+}
+body .vertical-tab-header .vertical-tab-nav-item.is-active :is(.vertical-tab-nav-item-title, .vertical-tab-nav-item-icon) {
+  color: inherit;
+}
+
+/* Toggle labels need a rule above the app's control-specific focus reset. */
+body.theme-light .checkbox-container.checkbox-container:focus-visible,
+body.theme-dark .checkbox-container.checkbox-container:focus-visible,
+body.theme-light .setting-group.mod-list .checkbox-container.checkbox-container:focus-visible,
+body.theme-dark .setting-group.mod-list .checkbox-container.checkbox-container:focus-visible {
+  outline: 2px solid var(--eng-accent-strong);
+  outline-offset: 4px;
+  box-shadow: none;
+}
+/* Keep focus changes immediate. The toggle thumb can keep its own transition. */
+body .checkbox-container { transition-property: background-color, transform; }
+
+/* A completed parent must not cross out an unfinished nested task. */
+body { --checklist-done-decoration: none; }
+body .markdown-rendered .task-list-item.is-checked > :is(ul, ol) {
+  color: var(--text-normal);
+  text-decoration: none;
+}
+
+/* R1: focus belongs to controls. The editor uses its caret. */
+body { --caret-color: var(--eng-accent-strong); --eng-list-indent: 1.4em; }
+body .markdown-source-view .cm-content:focus-visible,
+body .cm-editor.cm-focused { outline: none; box-shadow: none; }
+body .markdown-source-view .cm-cursor { border-left: 2px solid var(--caret-color); }
+body .setting-item-control :is(button:not(.mod-cta):not(.clickable-icon), select.dropdown) {
+  border: 1px solid var(--eng-rule-strong);
+}
+body .suggestion-item.is-selected,
+body .prompt .suggestion-item.is-selected {
+  background-color: var(--nav-item-background-active);
+  box-shadow: inset 3px 0 0 var(--eng-accent-strong);
+  outline: 1px solid var(--eng-accent-strong);
+  outline-offset: -1px;
+}
+body .vertical-tab-header .vertical-tab-nav-item.is-active,
+body .vertical-tab-nav-item.is-active { background-color: var(--interactive-accent); }
+
+/* Editor labels use one border, including the split hashtag tokens. */
+body .markdown-source-view.mod-cm6 .cm-content span.cm-inline-code:not(.cm-formatting) {
+  background: var(--eng-code-bg);
+  border: 1px solid var(--eng-rule);
+  border-radius: var(--eng-radius);
+  padding: 0.05em 0.25em;
+}
+body .markdown-source-view.mod-cm6 .cm-content span.cm-formatting-code {
+  border: 0; padding-inline: 0; background: transparent;
+}
+body .cm-s-obsidian span.cm-hashtag { border-radius: var(--eng-radius); }
+body .cm-s-obsidian span.cm-hashtag-begin {
+  border-right: 0; padding-right: 0;
+  border-radius: var(--eng-radius) 0 0 var(--eng-radius);
+}
+body .cm-s-obsidian span.cm-hashtag-end {
+  border-left: 0; padding-left: 0.1em;
+  border-radius: 0 var(--eng-radius) var(--eng-radius) 0;
+}
+body :is(.markdown-rendered h5, .HyperMD-header-5) {
+  text-transform: uppercase; letter-spacing: 0.08em;
+}
+body .callout-content > :last-child { margin-bottom: 0; }
+body .callout { border-inline-start-color: rgb(var(--callout-color)); }
+body .callout :is(.callout-title, .callout-icon, .callout-icon .svg-icon) {
+  color: rgb(var(--callout-color));
+}
+body.theme-light .callout[data-callout="note"] { --callout-color: 45, 100, 137; }
+body.theme-light .callout[data-callout="info"] { --callout-color: 45, 100, 137; }
+body.theme-light .callout[data-callout="abstract"] { --callout-color: 128, 80, 38; }
+body.theme-light .callout[data-callout="summary"] { --callout-color: 128, 80, 38; }
+body.theme-light .callout[data-callout="tldr"] { --callout-color: 128, 80, 38; }
+body.theme-light .callout[data-callout="todo"] { --callout-color: 42, 105, 118; }
+body.theme-light .callout[data-callout="tip"] { --callout-color: 59, 112, 89; }
+body.theme-light .callout[data-callout="hint"] { --callout-color: 59, 112, 89; }
+body.theme-light .callout[data-callout="success"] { --callout-color: 69, 106, 48; }
+body.theme-light .callout[data-callout="check"] { --callout-color: 69, 106, 48; }
+body.theme-light .callout[data-callout="done"] { --callout-color: 69, 106, 48; }
+body.theme-light .callout[data-callout="question"] { --callout-color: 112, 83, 135; }
+body.theme-light .callout[data-callout="help"] { --callout-color: 112, 83, 135; }
+body.theme-light .callout[data-callout="faq"] { --callout-color: 112, 83, 135; }
+body.theme-light .callout[data-callout="warning"] { --callout-color: 128, 91, 28; }
+body.theme-light .callout[data-callout="caution"] { --callout-color: 128, 91, 28; }
+body.theme-light .callout[data-callout="attention"] { --callout-color: 128, 91, 28; }
+body.theme-light .callout[data-callout="failure"] { --callout-color: 156, 69, 49; }
+body.theme-light .callout[data-callout="fail"] { --callout-color: 156, 69, 49; }
+body.theme-light .callout[data-callout="missing"] { --callout-color: 156, 69, 49; }
+body.theme-light .callout[data-callout="danger"] { --callout-color: 160, 57, 63; }
+body.theme-light .callout[data-callout="error"] { --callout-color: 160, 57, 63; }
+body.theme-light .callout[data-callout="bug"] { --callout-color: 134, 61, 102; }
+body.theme-light .callout[data-callout="example"] { --callout-color: 82, 100, 120; }
+body.theme-light .callout[data-callout="quote"] { --callout-color: 90, 99, 114; }
+body.theme-light .callout[data-callout="cite"] { --callout-color: 90, 99, 114; }
+body.theme-dark .callout[data-callout="note"] { --callout-color: 120, 177, 218; }
+body.theme-dark .callout[data-callout="info"] { --callout-color: 120, 177, 218; }
+body.theme-dark .callout[data-callout="abstract"] { --callout-color: 225, 164, 101; }
+body.theme-dark .callout[data-callout="summary"] { --callout-color: 225, 164, 101; }
+body.theme-dark .callout[data-callout="tldr"] { --callout-color: 225, 164, 101; }
+body.theme-dark .callout[data-callout="todo"] { --callout-color: 119, 189, 203; }
+body.theme-dark .callout[data-callout="tip"] { --callout-color: 140, 195, 170; }
+body.theme-dark .callout[data-callout="hint"] { --callout-color: 140, 195, 170; }
+body.theme-dark .callout[data-callout="success"] { --callout-color: 180, 206, 145; }
+body.theme-dark .callout[data-callout="check"] { --callout-color: 180, 206, 145; }
+body.theme-dark .callout[data-callout="done"] { --callout-color: 180, 206, 145; }
+body.theme-dark .callout[data-callout="question"] { --callout-color: 181, 163, 210; }
+body.theme-dark .callout[data-callout="help"] { --callout-color: 181, 163, 210; }
+body.theme-dark .callout[data-callout="faq"] { --callout-color: 181, 163, 210; }
+body.theme-dark .callout[data-callout="warning"] { --callout-color: 225, 182, 108; }
+body.theme-dark .callout[data-callout="caution"] { --callout-color: 225, 182, 108; }
+body.theme-dark .callout[data-callout="attention"] { --callout-color: 225, 182, 108; }
+body.theme-dark .callout[data-callout="failure"] { --callout-color: 239, 154, 135; }
+body.theme-dark .callout[data-callout="fail"] { --callout-color: 239, 154, 135; }
+body.theme-dark .callout[data-callout="missing"] { --callout-color: 239, 154, 135; }
+body.theme-dark .callout[data-callout="danger"] { --callout-color: 242, 155, 156; }
+body.theme-dark .callout[data-callout="error"] { --callout-color: 242, 155, 156; }
+body.theme-dark .callout[data-callout="bug"] { --callout-color: 222, 160, 191; }
+body.theme-dark .callout[data-callout="example"] { --callout-color: 159, 180, 204; }
+body.theme-dark .callout[data-callout="quote"] { --callout-color: 177, 183, 193; }
+body.theme-dark .callout[data-callout="cite"] { --callout-color: 177, 183, 193; }
+
+@media (prefers-reduced-motion: reduce) {
+  html body:is(.theme-light, .theme-dark) :is(button, input, textarea, select, .checkbox-container, .dropdown, .clickable-icon),
+  html body:is(.theme-light, .theme-dark) .checkbox-container::after,
+  html body:is(.theme-light, .theme-dark) .cm-editor .cm-cursorLayer {
+    transition-duration: 0s; animation-duration: 0s; animation-iteration-count: 1;
+    scroll-behavior: auto;
+  }
+}
+
+/* Keep nested list increments close to the editor's guide width. */
+body .markdown-rendered :is(ul, ol) :is(ul, ol) {
+  margin-inline-start: 0;
+  padding-inline-start: var(--eng-list-indent);
+}
+/* The disabled icon stays dim. Its focus ring has full opacity. */
+body :is(.clickable-icon.is-disabled, [aria-disabled="true"]):focus-visible { opacity: 1; }
+body :is(.clickable-icon.is-disabled, [aria-disabled="true"]):focus-visible :is(svg, .svg-icon) { opacity: 0.45; }
+
+/* A2: graph-paper margins surround a solid specification sheet. */
+body .markdown-preview-view .markdown-preview-sizer,
+body .markdown-source-view.mod-cm6 .cm-sizer {
+  background-color: var(--eng-bg);
+  min-height: 100%;
+}
+body .markdown-embed .markdown-preview-sizer { background-color: transparent; }
+body .markdown-source-view.mod-cm6.is-live-preview .HyperMD-quote {
+  background-color: var(--eng-bg-3);
+  color: var(--text-muted);
+}
+
+/* Selection reads as a stamped index row, with a separate edge cue. */
+body .suggestion-item.is-selected,
+body .prompt .suggestion-item.is-selected {
+  background-color: var(--interactive-accent);
+  color: var(--text-on-accent);
+  box-shadow: inset 3px 0 0 var(--text-on-accent);
+  outline: 1px solid var(--text-on-accent);
+  outline-offset: -1px;
+}
+body .suggestion-item.is-selected :is(.suggestion-title, .suggestion-note, .suggestion-hotkey, .suggestion-content) {
+  color: inherit;
+}
+body .prompt {
+  border: 1px solid var(--eng-rule-strong);
+  border-top: 3px solid var(--eng-accent);
+  border-radius: var(--eng-radius);
+}
+body .prompt-input-container { border-bottom: 1px solid var(--eng-rule-strong); }
+body .vertical-tab-header-group-title {
+  font-family: var(--font-monospace-theme);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* The outer native table widget owns horizontal scrolling in the editor. */
+body .markdown-preview-view pre,
+body .markdown-preview-view .table-wrapper { overflow-x: auto; overflow-y: hidden; }
+body .markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper { overflow: visible; }
+
+/* Embedded notes use one solid specification panel, without a nested grid. */
+body .markdown-embed .markdown-preview-view,
+body .markdown-embed-content.markdown-preview-view {
+  background-image: none;
+  background-color: transparent;
+}
+
+/* Round 2: a legible editor hierarchy, with one focus edge per setting. */
+body .markdown-reading-view .markdown-rendered :is(ul,ol) > li > :is(ul,ol) {
+  margin-inline-start: 0;
+  padding-inline-start: var(--eng-list-indent);
+}
+body .setting-item.setting-item-heading { border-top: 0; }
+body .setting-group .setting-item:focus-visible {
+  box-shadow: none; outline: 2px solid var(--eng-accent-strong); outline-offset: -2px;
+}
+body .search-result-file-matches { border: 0; box-shadow: none; }
+body .search-result-file-match { border: 0; border-bottom: 1px solid color-mix(in srgb, var(--eng-rule) 40%, transparent); border-radius: 0; }
+body .cm-s-obsidian span.cm-hashtag { font-weight: 600; border: 1px solid var(--eng-rule-strong); }
+body .cm-s-obsidian span.cm-hashtag-begin { border-inline-end: 0; }
+body .cm-s-obsidian span.cm-hashtag-end { border-inline-start: 0; }
+body .markdown-source-view.mod-cm6 hr,
+body .markdown-source-view.mod-cm6 .hr hr { border: 0; border-top: 1px solid var(--eng-rule-strong); height: 0; opacity: 1; }
+body.theme-light .callout[data-callout="failure"] { --callout-color: 156, 69, 49; }
+body.theme-light .callout[data-callout="bug"] { --callout-color: 134, 61, 102; }
+body.theme-dark .callout[data-callout="failure"] { --callout-color: 238, 140, 110; }
+body.theme-dark .callout[data-callout="bug"] { --callout-color: 220, 150, 200; }
+
+/* Authored requirement stamps keep their identifier in the note. */
+body .callout[data-callout="spec"] {
+  --callout-icon: ruler;
+  border: 2px solid var(--eng-accent-strong);
+  border-radius: var(--eng-radius);
+}
+body .callout[data-callout="spec"] .callout-title {
+  font-family: var(--font-monospace-theme);
+  font-variant-numeric: tabular-nums;
+  background: var(--eng-ink); color: var(--eng-bg);
+  width: fit-content; max-width: 100%;
+  margin: 0 0 0.65em; padding: 0.35em 0.65em;
+}
+body .callout[data-callout="spec"] :is(.callout-icon,.callout-icon .svg-icon) { color: var(--eng-bg); }
+body .callout[data-callout="spec"] table { font-variant-numeric: tabular-nums; }
+
+/* Native indentation retains the editor font metrics. */
+body .markdown-source-view.mod-cm6 .cm-indent-spacing {
+  box-shadow: inset 1px 0 0 var(--eng-rule);
+}
+
+/* Native accent classes can override body tokens. Resolve bounded control labels in the app root. */
+body.theme-light { --eng-on-accent: #ffffff; }
+body.theme-dark { --eng-on-accent: #1a1006; }
+body.theme-light > *, body.theme-dark > * {
+  --text-on-accent: var(--eng-on-accent);
+  --checkbox-marker-color: var(--eng-on-accent);
+}
+
+/* A focused writing line has a copper rail without a frame around the editor. */
+body .markdown-source-view.mod-cm6 .cm-focused .cm-active { box-shadow: -3px 0 0 var(--eng-accent-strong); }
+body .markdown-source-view.mod-cm6 .cm-content { caret-color: var(--caret-color); }
+body .search-result-file-matched-text { font-weight: 700; text-decoration-line: underline; }
+
+/* Use the native editor indent measurement without changing line fonts. */
+body .markdown-source-view.mod-cm6 { --list-indent: 2.25em; }
+
+/* Type edges retain a cue when neighbouring semantic hues look similar. */
+body .callout[data-callout="failure"] { border-inline-start-style: dashed; border-inline-start-width: 3px; }
+body .callout[data-callout="bug"] { border-inline-start-style: double; border-inline-start-width: 4px; }
+
+/* Tables share the note column width in Reading and Live Preview. */
+body .markdown-preview-view .table-wrapper,
+body .markdown-preview-view table,
+body .markdown-source-view.mod-cm6 .cm-embed-block.cm-table-widget,
+body .markdown-source-view.mod-cm6 .cm-table-widget .table-editor,
+body .markdown-source-view.mod-cm6 .cm-table-widget .table-wrapper,
+body .markdown-source-view.mod-cm6 .cm-table-widget table { width: 100%; }
+
+/* The native cursor layer is outside the generic editor class in current Obsidian. */
+@media (prefers-reduced-motion: reduce) {
+  body .markdown-source-view.mod-cm6 .cm-scroller .cm-layer.cm-cursorLayer {
+    animation-name: none; animation-duration: 0s; animation-iteration-count: 1;
+  }
+}
+
+/* Native table padding and negative margins need an automatic outer width. */
+body .markdown-source-view.mod-cm6 .cm-embed-block.cm-table-widget { width: auto; }
+body .markdown-rendered table { width: 100%; }
+/* Widen authored spaces without changing the editor font metrics. */
+body .markdown-source-view.mod-cm6 .cm-hmd-list-indent { word-spacing: 0.25em; }
+body .extra-setting-button:focus { outline: 2px solid var(--eng-accent-strong); outline-offset: 2px; opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  body .markdown-source-view.mod-cm6 .cm-scroller .cm-layer.cm-cursorLayer { animation-play-state: paused; }
+}
