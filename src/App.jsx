@@ -19,20 +19,38 @@ export default function App() {
   const [connectModalOpen, setConnectModalOpen] = useState(false);
   const [toast, setToast] = useState(null);
   
-  // Theme state
-  const [darkMode, setDarkMode] = useState(() => {
-    return localStorage.getItem('uroci_theme') === 'dark';
+  // Theme state: 'light' | 'dark' | 'system'
+  const [themeMode, setThemeMode] = useState(() => {
+    return localStorage.getItem('uroci_theme_mode') || 'system';
   });
 
+  // Apply theme dynamically including OS system preference listener
   useEffect(() => {
-    if (darkMode) {
-      document.documentElement.classList.add('dark');
-      localStorage.setItem('uroci_theme', 'dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-      localStorage.setItem('uroci_theme', 'light');
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const applyTheme = () => {
+      let isDark = false;
+      if (themeMode === 'system') {
+        isDark = mediaQuery.matches;
+      } else {
+        isDark = themeMode === 'dark';
+      }
+
+      if (isDark) {
+        document.documentElement.classList.add('dark');
+      } else {
+        document.documentElement.classList.remove('dark');
+      }
+    };
+
+    applyTheme();
+    localStorage.setItem('uroci_theme_mode', themeMode);
+
+    if (themeMode === 'system') {
+      mediaQuery.addEventListener('change', applyTheme);
+      return () => mediaQuery.removeEventListener('change', applyTheme);
     }
-  }, [darkMode]);
+  }, [themeMode]);
 
   const showToast = (message, type = 'info') => {
     setToast({ message, type });
@@ -71,7 +89,7 @@ export default function App() {
       console.error('Email fetch error:', err);
     } finally {
       if (showLoader) {
-        setTimeout(() => setIsRefreshing(false), 400);
+        setTimeout(() => setIsRefreshing(false), 300);
       }
     }
   }, [currentFolder, searchQuery]);
@@ -89,7 +107,6 @@ export default function App() {
       if (res.ok) {
         const fullEmail = await res.json();
         setSelectedEmail(fullEmail);
-        // Mark as read in local list
         setEmails(prev => prev.map(e => e.id === email.id ? { ...e, unread: false } : e));
       } else {
         setSelectedEmail(email);
@@ -189,15 +206,15 @@ export default function App() {
   const unreadCount = emails.filter(e => e.unread).length;
 
   return (
-    <div className="flex flex-col h-screen w-screen overflow-hidden bg-slate-100 dark:bg-slate-950 text-slate-800 dark:text-slate-100">
+    <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#f5f5f7] dark:bg-[#121214] text-slate-800 dark:text-slate-100">
       {/* Top Navbar */}
       <Navbar
         searchQuery={searchQuery}
         setSearchQuery={setSearchQuery}
         isRefreshing={isRefreshing}
         onRefresh={() => fetchEmails(true)}
-        darkMode={darkMode}
-        setDarkMode={setDarkMode}
+        themeMode={themeMode}
+        setThemeMode={setThemeMode}
         status={status}
         onOpenConnectModal={() => setConnectModalOpen(true)}
       />
@@ -244,7 +261,7 @@ export default function App() {
         </div>
       </div>
 
-      {/* Floating Compose Window (Yahoo style) */}
+      {/* Floating Compose Window */}
       <ComposeModal
         isOpen={composeOpen}
         onClose={() => setComposeOpen(false)}
@@ -260,12 +277,12 @@ export default function App() {
         onConnectSuccess={(data) => {
           fetchStatus();
           fetchEmails(true);
-          showToast(`¡Conectado exitosamente con ${data.email}!`, 'success');
+          showToast(`¡Conectado con ${data.email}!`, 'success');
         }}
         onDisconnect={() => {
           fetchStatus();
           fetchEmails(true);
-          showToast('Desconectado. Ahora en modo demostración.', 'info');
+          showToast('Desconectado. Modo demostración.', 'info');
         }}
       />
 

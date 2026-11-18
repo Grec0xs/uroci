@@ -2,21 +2,18 @@ import React from 'react';
 import { 
   Search, 
   RotateCw, 
-  Moon, 
-  Sun, 
   Mail, 
-  X,
-  SlidersHorizontal,
-  ChevronRight
+  X
 } from 'lucide-react';
+import ThemeSwitcher from './ThemeSwitcher';
 
 export default function Navbar({ 
   searchQuery, 
   setSearchQuery, 
   isRefreshing, 
   onRefresh, 
-  darkMode, 
-  setDarkMode, 
+  themeMode, 
+  setThemeMode, 
   status, 
   onOpenConnectModal 
 }) {
@@ -61,7 +58,7 @@ export default function Navbar({
         </div>
       </div>
 
-      {/* Action buttons & Gmail Status - Apple sleek segmented controls */}
+      {/* Action buttons & Gmail Status */}
       <div className="flex items-center gap-2">
         {/* Connection status badge */}
         <button
@@ -101,14 +98,8 @@ export default function Navbar({
           <RotateCw className={`w-3.5 h-3.5 ${isRefreshing ? 'animate-spin text-purple-600' : ''}`} />
         </button>
 
-        {/* Dark mode toggle */}
-        <button
-          onClick={() => setDarkMode(!darkMode)}
-          className="p-1.5 text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-white hover:bg-black/[0.04] dark:hover:bg-white/[0.06] rounded-md transition-colors"
-          title="Cambiar tema"
-        >
-          {darkMode ? <Sun className="w-3.5 h-3.5 text-amber-400" /> : <Moon className="w-3.5 h-3.5" />}
-        </button>
+        {/* AirPods-style Ambient Mode Theme Switcher */}
+        <ThemeSwitcher themeMode={themeMode} setThemeMode={setThemeMode} />
 
         {/* User Avatar */}
         <div 

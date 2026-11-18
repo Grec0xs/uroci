@@ -64,3 +64,55 @@
 .yahoo-gradient-subtle {
   background: linear-gradient(135deg, rgba(91, 19, 223, 0.06) 0%, rgba(120, 34, 243, 0.03) 100%);
 }
+
+/* --- Dark Mode Email Content Readability Fixes (Apple Mail Style) --- */
+.dark .email-content-wrapper {
+  color: #e2e8f0;
+}
+
+/* Override dark inline colors on text in dark mode */
+.dark .email-content-wrapper h1,
+.dark .email-content-wrapper h2,
+.dark .email-content-wrapper h3,
+.dark .email-content-wrapper h4,
+.dark .email-content-wrapper strong,
+.dark .email-content-wrapper b {
+  color: #f8fafc !important;
+}
+
+.dark .email-content-wrapper p,
+.dark .email-content-wrapper span,
+.dark .email-content-wrapper li,
+.dark .email-content-wrapper td,
+.dark .email-content-wrapper th,
+.dark .email-content-wrapper label {
+  color: #cbd5e1 !important;
+}
+
+/* Fix inline code blocks inside emails */
+.dark .email-content-wrapper code {
+  background-color: rgba(255, 255, 255, 0.12) !important;
+  color: #d8b4fe !important;
+  padding: 0.15rem 0.35rem;
+  border-radius: 0.35rem;
+  font-size: 0.85em;
+}
+
+/* Adapt light inline backgrounds (like white/gray card wrappers) to dark mode */
+.dark .email-content-wrapper [style*="background: #fff"],
+.dark .email-content-wrapper [style*="background:#fff"],
+.dark .email-content-wrapper [style*="background-color: #fff"],
+.dark .email-content-wrapper [style*="background-color:#fff"],
+.dark .email-content-wrapper [style*="background: white"],
+.dark .email-content-wrapper [style*="background-color: white"] {
+  background: #1f1f23 !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+}
+
+.dark .email-content-wrapper [style*="background: #f"],
+.dark .email-content-wrapper [style*="background:#f"],
+.dark .email-content-wrapper [style*="background-color: #f"],
+.dark .email-content-wrapper [style*="background-color:#f"] {
+  background: #27272b !important;
+  border-color: rgba(255, 255, 255, 0.08) !important;
+}
