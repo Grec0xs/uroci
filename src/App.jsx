@@ -17,6 +17,7 @@ export default function App() {
   const [composeOpen, setComposeOpen] = useState(false);
   const [composeData, setComposeData] = useState({});
   const [connectModalOpen, setConnectModalOpen] = useState(false);
+  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [toast, setToast] = useState(null);
   
   // Theme state: 'light' | 'dark' | 'system'
@@ -217,36 +218,57 @@ export default function App() {
         setThemeMode={setThemeMode}
         status={status}
         onOpenConnectModal={() => setConnectModalOpen(true)}
+        onToggleSidebar={() => setMobileSidebarOpen(prev => !prev)}
       />
 
       {/* Main Layout Area */}
-      <div className="flex-1 flex overflow-hidden">
-        {/* Left Sidebar */}
-        <Sidebar
-          currentFolder={currentFolder}
-          setCurrentFolder={(folder) => {
-            setCurrentFolder(folder);
-            setSelectedEmail(null);
-          }}
-          unreadCount={unreadCount}
-          onOpenCompose={() => {
-            setComposeData({});
-            setComposeOpen(true);
-          }}
-          onOpenConnectModal={() => setConnectModalOpen(true)}
-          status={status}
-        />
+      <div className="flex-1 flex overflow-hidden relative">
+        {/* Mobile Slide-over Drawer Backdrop */}
+        {mobileSidebarOpen && (
+          <div 
+            onClick={() => setMobileSidebarOpen(false)}
+            className="md:hidden fixed inset-0 z-40 bg-black/40 backdrop-blur-xs transition-opacity"
+          />
+        )}
+
+        {/* Sidebar - Desktop static & Mobile drawer */}
+        <div className={`
+          fixed md:relative z-40 md:z-auto inset-y-0 left-0 transition-transform duration-200 ease-out md:translate-x-0
+          ${mobileSidebarOpen ? 'translate-x-0 shadow-2xl' : '-translate-x-full md:translate-x-0'}
+        `}>
+          <Sidebar
+            currentFolder={currentFolder}
+            setCurrentFolder={(folder) => {
+              setCurrentFolder(folder);
+              setSelectedEmail(null);
+              setMobileSidebarOpen(false);
+            }}
+            unreadCount={unreadCount}
+            onOpenCompose={() => {
+              setComposeData({});
+              setComposeOpen(true);
+              setMobileSidebarOpen(false);
+            }}
+            onOpenConnectModal={() => {
+              setConnectModalOpen(true);
+              setMobileSidebarOpen(false);
+            }}
+            status={status}
+          />
+        </div>
 
         {/* Email List Pane */}
-        <EmailList
-          emails={emails}
-          selectedEmail={selectedEmail}
-          onSelectEmail={handleSelectEmail}
-          onToggleStar={handleToggleStar}
-          onToggleRead={handleToggleRead}
-          onDeleteEmail={handleDeleteEmail}
-          currentFolder={currentFolder}
-        />
+        <div className={`flex-1 md:flex-initial ${selectedEmail ? 'hidden lg:flex' : 'flex'}`}>
+          <EmailList
+            emails={emails}
+            selectedEmail={selectedEmail}
+            onSelectEmail={handleSelectEmail}
+            onToggleStar={handleToggleStar}
+            onToggleRead={handleToggleRead}
+            onDeleteEmail={handleDeleteEmail}
+            currentFolder={currentFolder}
+          />
+        </div>
 
         {/* Email Reader Pane */}
         <div className={`flex-1 ${!selectedEmail ? 'hidden lg:flex' : 'flex'}`}>

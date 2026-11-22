@@ -83,10 +83,10 @@ export default function ComposeModal({
         animate={{ opacity: 1, y: 0, scale: 1 }}
         exit={{ opacity: 0, y: 15, scale: 0.98 }}
         transition={{ duration: 0.15, ease: [0.16, 1, 0.3, 1] }}
-        className={`fixed z-50 bg-white dark:bg-[#1c1c1e] border border-black/[0.08] dark:border-white/[0.08] rounded-2xl shadow-2xl flex flex-col overflow-hidden transition-all duration-150 ${
+        className={`fixed z-50 bg-white dark:bg-[#1c1c1e] border border-black/[0.08] dark:border-white/[0.08] shadow-2xl flex flex-col overflow-hidden transition-all duration-150 ${
           isMaximized
-            ? 'inset-6 max-w-4xl mx-auto my-auto h-[90vh]'
-            : 'bottom-4 right-6 w-full max-w-lg h-[500px]'
+            ? 'inset-2 sm:inset-6 max-w-4xl mx-auto my-auto h-[95vh] sm:h-[90vh] rounded-2xl'
+            : 'inset-x-0 bottom-0 sm:inset-x-auto sm:bottom-4 sm:right-6 w-full sm:max-w-lg h-[85vh] sm:h-[500px] rounded-t-2xl sm:rounded-2xl pb-safe'
         }`}
       >
         {/* Apple window style header */}

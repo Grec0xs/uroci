@@ -3,6 +3,7 @@ import react from '@vitejs/plugin-react';
 import { apiApp } from './server/apiApp.js';
 
 export default defineConfig({
+  base: './',
   plugins: [
     react(),
     {

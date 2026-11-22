@@ -3,7 +3,8 @@ import {
   Search, 
   RotateCw, 
   Mail, 
-  X
+  X,
+  Menu
 } from 'lucide-react';
 import ThemeSwitcher from './ThemeSwitcher';
 
@@ -15,20 +16,28 @@ export default function Navbar({
   themeMode, 
   setThemeMode, 
   status, 
-  onOpenConnectModal 
+  onOpenConnectModal,
+  onToggleSidebar
 }) {
   return (
-    <header className="h-14 border-b border-black/[0.06] dark:border-white/[0.08] bg-[#fbfbfd]/80 dark:bg-[#161618]/80 backdrop-blur-xl px-4 flex items-center justify-between sticky top-0 z-30 transition-colors select-none">
+    <header className="h-14 pt-safe border-b border-black/[0.06] dark:border-white/[0.08] bg-[#fbfbfd]/80 dark:bg-[#161618]/80 backdrop-blur-xl px-3 sm:px-4 flex items-center justify-between sticky top-0 z-30 transition-colors select-none">
       {/* Brand logo & title - Apple clean layout + Yahoo identity */}
-      <div className="flex items-center gap-2.5 w-60 min-w-[200px]">
-        <div className="w-8 h-8 rounded-xl yahoo-apple-gradient flex items-center justify-center text-white shadow-sm shadow-purple-600/30">
+      <div className="flex items-center gap-2 sm:gap-2.5">
+        <button
+          onClick={onToggleSidebar}
+          className="md:hidden p-1.5 -ml-1 text-slate-500 hover:text-slate-800 dark:hover:text-white rounded-lg hover:bg-black/[0.04] transition-colors"
+          title="Abrir buzones"
+        >
+          <Menu className="w-4 h-4" />
+        </button>
+        <div className="w-8 h-8 rounded-xl yahoo-apple-gradient flex items-center justify-center text-white shadow-sm shadow-purple-600/30 shrink-0">
           <Mail className="w-4 h-4 stroke-[2]" />
         </div>
         <div className="flex items-center gap-1.5">
           <span className="font-semibold text-sm tracking-tight text-slate-900 dark:text-white">
             Uroci Mail
           </span>
-          <span className="text-[9px] font-semibold tracking-wide uppercase px-1.5 py-0.5 rounded-full bg-purple-100/70 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
+          <span className="hidden sm:inline-block text-[9px] font-semibold tracking-wide uppercase px-1.5 py-0.5 rounded-full bg-purple-100/70 dark:bg-purple-950/60 text-purple-700 dark:text-purple-300">
             Hybrid
           </span>
         </div>

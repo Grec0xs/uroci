@@ -13,12 +13,12 @@
             "state": {
               "type": "markdown",
               "state": {
-                "file": "docs/GUIA_DE_PERSONALIZACION.md",
+                "file": "docs/GUIA_APP_IPHONE_XCODE.md",
                 "mode": "source",
                 "source": false
               },
               "icon": "lucide-file",
-              "title": "GUIA_DE_PERSONALIZACION"
+              "title": "GUIA_APP_IPHONE_XCODE"
             }
           },
           {
@@ -204,20 +204,23 @@
   },
   "active": "1f8127bae3353412",
   "lastOpenFiles": [
+    "docs/GUIA_DE_PERSONALIZACION.md",
+    "docs/GUIA_APP_IPHONE_XCODE.md",
+    "ios-app/README.md",
+    "ios-app/sync.sh",
+    "ios-app/UrociMail.xcodeproj/project.pbxproj",
+    "ios-app/UrociMail/Assets.xcassets/AppIcon.appiconset/Contents.json",
+    "ios-app/UrociMail/Assets.xcassets/AccentColor.colorset/Contents.json",
+    "ios-app/UrociMail/Assets.xcassets/Contents.json",
+    "ios-app/UrociMail/Info.plist",
+    "ios-app/UrociMail/UrociMailApp.swift",
+    "ios-app/UrociMail/ContentView.swift",
+    "ios-app/UrociMail/WebView.swift",
+    "ios-app/UrociMail/SchemeHandler.swift",
     "docs/COMO_FUNCIONA_VITE.md",
-    "DB/Untitled.base",
     "Plan.md",
     "COMO_FUNCIONA_VITE.md",
-    "dist/assets/index-NVSekYz8.js",
-    "server/apiApp.js",
     "README.md",
-    "dist/assets/index-Dl4TD71z.css",
-    "dist/assets/index-Bccztfzl.js",
-    "dist/index.html",
-    "dist/assets",
-    "dist",
-    "src/App.jsx",
-    "src/components/Toast.jsx",
     "node_modules/lucide-react/README.md",
     "node_modules/mailparser/node_modules/iconv-lite/README.md",
     "node_modules/yargs/README.md",
@@ -237,9 +240,6 @@
     "node_modules/pino/docs/browser.md",
     "node_modules/pino/docs/benchmarks.md",
     "node_modules/pino/docs/asynchronous.md",
-    "node_modules/pino/docs/api.md",
-    "node_modules/imapflow/node_modules/iconv-lite/README.md",
-    "node_modules/express/node_modules/debug/CHANGELOG.md",
     "node_modules/concurrently/docs/demo.gif"
   ]
 }

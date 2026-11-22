@@ -8,6 +8,7 @@ Cliente de correo electrónico web moderno, simple y elegante que fusiona la est
 
 En la carpeta [`docs/`](./docs) encontrarás guías completas para entender y personalizar el proyecto:
 
+- 📱 [**Guía para iPhone con Xcode**](./docs/GUIA_APP_IPHONE_XCODE.md): Cómo abrir, compilar e instalar la app nativa en tu iPhone o simulador de iOS.
 - 🎨 [**Guía de Personalización y Estilos**](./docs/GUIA_DE_PERSONALIZACION.md): Cómo modificar colores, degradados, fuentes, animaciones, carpetas y correos de prueba.
 - ⚡ [**¿Cómo funciona Vite en este proyecto?**](./docs/COMO_FUNCIONA_VITE.md): Explicación técnica para principiantes, comandos para probarlo en celular y arquitectura del servidor.
 
@@ -37,6 +38,12 @@ En la carpeta [`docs/`](./docs) encontrarás guías completas para entender y pe
 ```bash
 # Inicia el cliente con la API integrada en un solo comando
 npm run dev
+
+# Abrir el proyecto nativo de iPhone en Xcode
+npm run ios:open
+
+# Sincronizar cambios web hacia la app de iOS
+npm run ios:sync
 ```
 
 - **Frontend:** [http://localhost:5173](http://localhost:5173)
