@@ -8,6 +8,7 @@ Cliente de correo electrónico web moderno, simple y elegante que fusiona la est
 
 En la carpeta [`docs/`](./docs) encontrarás guías completas para entender y personalizar el proyecto:
 
+- 🌐 [**Guía de Despliegue en Internet y Sincronización**](./docs/DESPLIEGUE_Y_SINCRONIZACION_APP.md): Cómo subir la página a internet (Render/Railway), conectar la app de iPhone y actualizarla sin romper nada.
 - 📱 [**Guía para iPhone con Xcode**](./docs/GUIA_APP_IPHONE_XCODE.md): Cómo abrir, compilar e instalar la app nativa en tu iPhone o simulador de iOS.
 - 🎨 [**Guía de Personalización y Estilos**](./docs/GUIA_DE_PERSONALIZACION.md): Cómo modificar colores, degradados, fuentes, animaciones, carpetas y correos de prueba.
 - ⚡ [**¿Cómo funciona Vite en este proyecto?**](./docs/COMO_FUNCIONA_VITE.md): Explicación técnica para principiantes, comandos para probarlo en celular y arquitectura del servidor.

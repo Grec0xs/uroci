@@ -6,6 +6,7 @@ import EmailReader from './components/EmailReader';
 import ComposeModal from './components/ComposeModal';
 import GmailConnectModal from './components/GmailConnectModal';
 import Toast from './components/Toast';
+import MobileView from './components/mobile/MobileView';
 
 export default function App() {
   const [emails, setEmails] = useState([]);
@@ -17,8 +18,20 @@ export default function App() {
   const [composeOpen, setComposeOpen] = useState(false);
   const [composeData, setComposeData] = useState({});
   const [connectModalOpen, setConnectModalOpen] = useState(false);
-  const [mobileSidebarOpen, setMobileSidebarOpen] = useState(false);
   const [toast, setToast] = useState(null);
+
+  // Responsive mobile screen detection (< 768px)
+  const [isMobile, setIsMobile] = useState(() => {
+    return typeof window !== 'undefined' ? window.innerWidth < 768 : false;
+  });
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth < 768);
+    };
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
   
   // Theme state: 'light' | 'dark' | 'system'
   const [themeMode, setThemeMode] = useState(() => {
@@ -205,6 +218,46 @@ export default function App() {
   };
 
   const unreadCount = emails.filter(e => e.unread).length;
+
+  // Render dedicated mobile experience on phones & mobile viewports (< 768px)
+  if (isMobile) {
+    return (
+      <>
+        <MobileView
+          emails={emails}
+          selectedEmail={selectedEmail}
+          setSelectedEmail={handleSelectEmail}
+          currentFolder={currentFolder}
+          setCurrentFolder={(folder) => {
+            setCurrentFolder(folder);
+            setSelectedEmail(null);
+          }}
+          searchQuery={searchQuery}
+          setSearchQuery={setSearchQuery}
+          status={status}
+          isRefreshing={isRefreshing}
+          onRefresh={() => fetchEmails(true)}
+          themeMode={themeMode}
+          setThemeMode={setThemeMode}
+          onToggleStar={handleToggleStar}
+          onToggleRead={handleToggleRead}
+          onDeleteEmail={handleDeleteEmail}
+          onSendEmail={handleSendEmail}
+          unreadCount={unreadCount}
+          composeOpen={composeOpen}
+          setComposeOpen={setComposeOpen}
+          composeData={composeData}
+          setComposeData={setComposeData}
+          connectModalOpen={connectModalOpen}
+          setConnectModalOpen={setConnectModalOpen}
+          fetchStatus={fetchStatus}
+          fetchEmails={fetchEmails}
+          showToast={showToast}
+        />
+        <Toast toast={toast} onClose={() => setToast(null)} />
+      </>
+    );
+  }
 
   return (
     <div className="flex flex-col h-screen w-screen overflow-hidden bg-[#f5f5f7] dark:bg-[#121214] text-slate-800 dark:text-slate-100">
